@@ -3,86 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Ferramentas Fácil - Ferramentas Online Grátis</title>
-
+<title>Ferramentas Fácil</title>
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b}
+header{background:#2563eb;color:white;text-align:center;padding:30px 15px}
+header h1{margin:0 0 10px}
+main{max-width:900px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;margin-bottom:20px;border-radius:12px;box-shadow:0 3px 10px #0001}
+input,textarea,button{font:inherit;padding:12px;border-radius:7px;margin:5px 0}
+input,textarea{width:100%;border:1px solid #cbd5e1}
+button{background:#2563eb;color:white;border:0;cursor:pointer}
+button:hover{background:#1d4ed8}
+.resultado{font-weight:bold;overflow-wrap:anywhere}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🛠️ Ferramentas Fácil</h1>
+<p>Ferramentas gratuitas para facilitar seu dia!</p>
+</header>
+
+<main>
+
+<section class="card">
+<h2>🧮 Calculadora</h2>
+<input id="n1" type="number" placeholder="Primeiro número">
+<input id="n2" type="number" placeholder="Segundo número">
+<button onclick="calcular('+')">Somar</button>
+<button onclick="calcular('-')">Subtrair</button>
+<button onclick="calcular('*')">Multiplicar</button>
+<button onclick="calcular('/')">Dividir</button>
+<p id="resultadoCalc" class="resultado"></p>
+</section>
+
+<section class="card">
+<h2>🔐 Gerador de Senhas</h2>
+<label for="tamanho">Quantidade de caracteres:</label>
+<input id="tamanho" type="number" value="12" min="4" max="64">
+<button onclick="gerarSenha()">Gerar senha</button>
+<p id="senha" class="resultado"></p>
+</section>
+
+<section class="card">
+<h2>📝 Contador de Palavras</h2>
+<textarea id="texto" rows="6" placeholder="Digite seu texto..." oninput="contar()"></textarea>
+<p id="contador">Palavras: 0 | Caracteres: 0</p>
+</section>
+
+<section class="card">
+<h2>🔠 Conversor de Texto</h2>
+<textarea id="converter" rows="5" placeholder="Digite seu texto..."></textarea>
+<button onclick="converterTexto('maiusculo')">MAIÚSCULAS</button>
+<button onclick="converterTexto('minusculo')">minúsculas</button>
+<button onclick="converterTexto('titulo')">Primeira Letra</button>
+</section>
+
+</main>
+
+<footer>
+<p>© 2026 Ferramentas Fácil</p>
+<p>Ferramentas online gratuitas</p>
+</footer>
+
+<script>
+function calcular(op){
+const a=Number(document.getElementById('n1').value);
+const b=Number(document.getElementById('n2').value);
+const r=document.getElementById('resultadoCalc');
+if(document.getElementById('n1').value===''||
+document.getElementById('n2').value===''){
+r.textContent='Digite os dois números.';
+return;
+}
+if(op==='/'&&b===0){
+r.textContent='Não é possível dividir por zero.';
+return;
+}
+let resultado;
+if(op==='+')resultado=a+b;
+if(op==='-')resultado=a-b;
+if(op==='*')resultado=a*b;
+if(op==='/')resultado=a/b;
+r.textContent='Resultado: '+resultado;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f6fc;
-  color: #222;
+function gerarSenha(){
+const tamanho=Number(document.getElementById('tamanho').value);
+const caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
+if(!Number.isInteger(tamanho)||tamanho<4||tamanho>64){
+alert('Escolha entre 4 e 64 caracteres.');
+return;
+}
+if(!window.crypto||!window.crypto.getRandomValues){
+alert('Seu navegador não oferece geração segura de senhas.');
+return;
+}
+const valores=new Uint32Array(1);
+const limite=Math.floor(4294967296/caracteres.length)*caracteres.length;
+let senha='';
+for(let i=0;i<tamanho;i++){
+let numero;
+do{
+crypto.getRandomValues(valores);
+numero=valores[0];
+}while(numero>=limite);
+senha+=caracteres[numero%caracteres.length];
+}
+document.getElementById('senha').textContent=senha;
 }
 
-header {
-  background: linear-gradient(135deg, #123b8a, #2575fc);
-  color: white;
-  text-align: center;
-  padding: 35px 15px;
+function contar(){
+const texto=document.getElementById('texto').value;
+const palavras=texto.trim()?texto.trim().split(/\s+/u).length:0;
+document.getElementById('contador').textContent=
+'Palavras: '+palavras+' | Caracteres: '+Array.from(texto).length;
 }
 
-header h1 {
-  margin: 0 0 12px;
-  font-size: 30px;
+function converterTexto(tipo){
+const campo=document.getElementById('converter');
+if(tipo==='maiusculo')campo.value=campo.value.toLocaleUpperCase('pt-BR');
+if(tipo==='minusculo')campo.value=campo.value.toLocaleLowerCase('pt-BR');
+if(tipo==='titulo'){
+campo.value=campo.value.toLocaleLowerCase('pt-BR')
+.replace(/(^|[\s])(\p{L})/gu,(m,espaco,letra)=>espaco+letra.toLocaleUpperCase('pt-BR'));
 }
-
-header p {
-  font-size: 16px;
 }
+</script>
 
-nav {
-  background: #102c65;
-  padding: 15px;
-  text-align: center;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 8px;
-  display: inline-block;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-.intro {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px #00000012;
-  text-align: center;
-}
-
-.card h2 {
-  color: #174ca0;
-}
-
-textarea, input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-}
-
-textarea
+</body>
+</html>
