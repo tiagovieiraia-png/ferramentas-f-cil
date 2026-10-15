@@ -1,137 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ferramentas Fácil</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b}
-header{background:#2563eb;color:white;text-align:center;padding:30px 15px}
-header h1{margin:0 0 10px}
-main{max-width:900px;margin:25px auto;padding:15px}
-.card{background:white;padding:22px;margin-bottom:20px;border-radius:12px;box-shadow:0 3px 10px #0001}
-input,textarea,button{font:inherit;padding:12px;border-radius:7px;margin:5px 0}
-input,textarea{width:100%;border:1px solid #cbd5e1}
-button{background:#2563eb;color:white;border:0;cursor:pointer}
-button:hover{background:#1d4ed8}
-.resultado{font-weight:bold;overflow-wrap:anywhere}
-footer{text-align:center;padding:25px;color:#64748b}
-</style>
-</head>
-<body>
-
-<header>
-<h1>🛠️ Ferramentas Fácil</h1>
-<p>Ferramentas gratuitas para facilitar seu dia!</p>
-</header>
-
-<main>
-
-<section class="card">
-<h2>🧮 Calculadora</h2>
-<input id="n1" type="number" placeholder="Primeiro número">
-<input id="n2" type="number" placeholder="Segundo número">
-<button onclick="calcular('+')">Somar</button>
-<button onclick="calcular('-')">Subtrair</button>
-<button onclick="calcular('*')">Multiplicar</button>
-<button onclick="calcular('/')">Dividir</button>
-<p id="resultadoCalc" class="resultado"></p>
-</section>
-
-<section class="card">
-<h2>🔐 Gerador de Senhas</h2>
-<label for="tamanho">Quantidade de caracteres:</label>
-<input id="tamanho" type="number" value="12" min="4" max="64">
-<button onclick="gerarSenha()">Gerar senha</button>
-<p id="senha" class="resultado"></p>
-</section>
-
-<section class="card">
-<h2>📝 Contador de Palavras</h2>
-<textarea id="texto" rows="6" placeholder="Digite seu texto..." oninput="contar()"></textarea>
-<p id="contador">Palavras: 0 | Caracteres: 0</p>
-</section>
-
-<section class="card">
-<h2>🔠 Conversor de Texto</h2>
-<textarea id="converter" rows="5" placeholder="Digite seu texto..."></textarea>
-<button onclick="converterTexto('maiusculo')">MAIÚSCULAS</button>
-<button onclick="converterTexto('minusculo')">minúsculas</button>
-<button onclick="converterTexto('titulo')">Primeira Letra</button>
-</section>
-
-</main>
-
-<footer>
-<p>© 2026 Ferramentas Fácil</p>
-<p>Ferramentas online gratuitas</p>
-</footer>
-
-<script>
-function calcular(op){
-const a=Number(document.getElementById('n1').value);
-const b=Number(document.getElementById('n2').value);
-const r=document.getElementById('resultadoCalc');
-if(document.getElementById('n1').value===''||
-document.getElementById('n2').value===''){
-r.textContent='Digite os dois números.';
-return;
-}
-if(op==='/'&&b===0){
-r.textContent='Não é possível dividir por zero.';
-return;
-}
-let resultado;
-if(op==='+')resultado=a+b;
-if(op==='-')resultado=a-b;
-if(op==='*')resultado=a*b;
-if(op==='/')resultado=a/b;
-r.textContent='Resultado: '+resultado;
-}
-
-function gerarSenha(){
-const tamanho=Number(document.getElementById('tamanho').value);
-const caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
-if(!Number.isInteger(tamanho)||tamanho<4||tamanho>64){
-alert('Escolha entre 4 e 64 caracteres.');
-return;
-}
-if(!window.crypto||!window.crypto.getRandomValues){
-alert('Seu navegador não oferece geração segura de senhas.');
-return;
-}
-const valores=new Uint32Array(1);
-const limite=Math.floor(4294967296/caracteres.length)*caracteres.length;
-let senha='';
-for(let i=0;i<tamanho;i++){
-let numero;
-do{
-crypto.getRandomValues(valores);
-numero=valores[0];
-}while(numero>=limite);
-senha+=caracteres[numero%caracteres.length];
-}
-document.getElementById('senha').textContent=senha;
-}
-
-function contar(){
-const texto=document.getElementById('texto').value;
-const palavras=texto.trim()?texto.trim().split(/\s+/u).length:0;
-document.getElementById('contador').textContent=
-'Palavras: '+palavras+' | Caracteres: '+Array.from(texto).length;
-}
-
-function converterTexto(tipo){
-const campo=document.getElementById('converter');
-if(tipo==='maiusculo')campo.value=campo.value.toLocaleUpperCase('pt-BR');
-if(tipo==='minusculo')campo.value=campo.value.toLocaleLowerCase('pt-BR');
-if(tipo==='titulo'){
-campo.value=campo.value.toLocaleLowerCase('pt-BR')
-.replace(/(^|[\s])(\p{L})/gu,(m,espaco,letra)=>espaco+letra.toLocaleUpperCase('pt-BR'));
-}
-}
-</script>
-
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Ferramentas gratuitas para texto, números, imagens e produtividade."><title>Ferramentas Fácil</title><style>*{box-sizing:border-box}body{margin:0;font:16px system-ui,Arial;background:#f1f5f9;color:#172033}header{background:linear-gradient(120deg,#1d4ed8,#0f766e);color:white;padding:38px 16px;text-align:center}h1{margin:0}main{max-width:1050px;margin:auto;padding:20px}#busca{width:100%;padding:15px;border:1px solid #cbd5e1;border-radius:12px;margin:0 0 18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.card{background:white;border-radius:14px;padding:18px;box-shadow:0 3px 14px #0001;min-width:0}h2{font-size:19px;margin:0 0 12px}input,textarea,select{width:100%;padding:10px;margin:5px 0;border:1px solid #cbd5e1;border-radius:8px;font:inherit}textarea{min-height:90px}button{border:0;border-radius:8px;background:#2563eb;color:white;padding:10px 13px;margin:5px 4px 5px 0;font:inherit;cursor:pointer}button:focus-visible{outline:3px solid orange}.out{overflow-wrap:anywhere;white-space:pre-wrap;background:#eff6ff;padding:10px;border-radius:8px;min-height:40px}footer{text-align:center;padding:28px;color:#475569}a{color:inherit}canvas{max-width:100%}small{display:block;color:#475569}</style></head><body><header><h1>🛠️ Ferramentas Fácil</h1><p>Ferramentas gratuitas que funcionam no celular e no computador</p></header><main><input id="busca" placeholder="🔎 Buscar ferramenta..." aria-label="Buscar ferramenta"><div id="grid" class="grid"></div><section class="card" style="margin-top:18px"><h2>Sobre o projeto</h2><p>Ferramentas Fácil oferece utilitários gratuitos. As operações desta versão acontecem no próprio navegador, sem enviar seus arquivos a um servidor.</p><p>Contato e política de privacidade serão publicados antes de solicitar monetização.</p></section></main><footer>© 2026 Ferramentas Fácil</footer><script>
+const grid=document.querySelector('#grid');const tools=[];function add(title,html,fn){tools.push({title,html,fn})}function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function render(q=''){grid.innerHTML='';tools.filter(t=>t.title.toLocaleLowerCase('pt-BR').includes(q.toLocaleLowerCase('pt-BR'))).forEach(t=>{let el=document.createElement('section');el.className='card';el.innerHTML='<h2>'+esc(t.title)+'</h2>'+t.html+'<div class="out" aria-live="polite"></div>';grid.append(el);let inputs=el.querySelectorAll('input,textarea,select');let out=el.querySelector('.out');el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{try{t.fn(inputs,out,b.dataset.action||'')}catch(e){out.textContent='Confira os valores informados.'}}))})}const inp=(p='Digite aqui',type='text')=>`<input type="${type}" placeholder="${p}" aria-label="${p}">`;const area=()=>'<textarea placeholder="Digite ou cole seu texto" aria-label="Texto"></textarea>';const btn=(s,a='')=>`<button data-action="${a}">${s}</button>`;const value=x=>x[0].value;const text=(o,s)=>o.textContent=String(s);const num=s=>Number(s);const nums=x=>[num(x[0].value),num(x[1].value)];const valid=(x)=>x.every(e=>e.value.trim()!==''&&Number.isFinite(Number(e.value)));
+add('Calculadora',inp('Primeiro número','number')+inp('Segundo número','number')+['Somar','Subtrair','Multiplicar','Dividir'].map((v,i)=>btn(v,String(i))).join(''),(x,o,a)=>{if(!valid(x))return text(o,'Preencha os dois números');let [n,m]=nums(x);text(o,a==='0'?n+m:a==='1'?n-m:a==='2'?n*m:m===0?'Não é possível dividir por zero':n/m)});
+add('Porcentagem',inp('Valor','number')+inp('Porcentagem','number')+btn('Calcular'),(x,o)=>text(o,valid(x)?nums(x)[0]*nums(x)[1]/100:'Preencha os valores'));
+add('Desconto',inp('Preço','number')+inp('Desconto (%)','number')+btn('Calcular'),(x,o)=>text(o,valid(x)?(nums(x)[0]*(1-nums(x)[1]/100)).toFixed(2):'Preencha os valores'));
+add('Acréscimo',inp('Preço','number')+inp('Acréscimo (%)','number')+btn('Calcular'),(x,o)=>text(o,valid(x)?(nums(x)[0]*(1+nums(x)[1]/100)).toFixed(2):'Preencha os valores'));
+add('Média de números',inp('Números separados por vírgula')+btn('Calcular'),(x,o)=>{let v=value(x).split(',').map(s=>s.trim());text(o,v.length&&v.every(s=>s!==''&&Number.isFinite(+s))?v.reduce((a,b)=>a+(+b),0)/v.length:'Digite números separados por vírgula')});
+add('Regra de três',inp('A','number')+inp('B','number')+inp('C','number')+btn('Calcular X: A/B = C/X'),(x,o)=>text(o,[...x].every(e=>e.value!==''&&Number.isFinite(+e.value))&&+x[0].value!==0?(+x[1].value)*(+x[2].value)/(+x[0].value):'Informe A, B e C; A não pode ser zero'));
+add('Conversor Celsius / Fahrenheit',inp('Temperatura','number')+btn('°C → °F','c')+btn('°F → °C','f'),(x,o,a)=>text(o,x[0].value!==''?a==='c'?(+value(x)*9/5+32).toFixed(2)+' °F':((+value(x)-32)*5/9).toFixed(2)+' °C':'Digite a temperatura'));
+add('Conversor quilômetros / milhas',inp('Distância','number')+btn('km → milhas','k')+btn('milhas → km','m'),(x,o,a)=>text(o,x[0].value!==''?(+value(x)*(a==='k'?0.621371:1.609344)).toFixed(3):'Digite a distância'));
+add('Conversor kg / libras',inp('Peso','number')+btn('kg → lb','k')+btn('lb → kg','l'),(x,o,a)=>text(o,x[0].value!==''?(+value(x)*(a==='k'?2.20462262:1/2.20462262)).toFixed(3):'Digite o peso'));
+add('Contador de palavras',area()+btn('Contar'),(x,o)=>{let s=value(x);text(o,`Palavras: ${s.trim()?s.trim().split(/\s+/u).length:0} | Caracteres: ${Array.from(s).length}`)});
+add('Maiúsculas e minúsculas',area()+btn('MAIÚSCULAS','u')+btn('minúsculas','l'),(x,o,a)=>text(o,a==='u'?value(x).toLocaleUpperCase('pt-BR'):value(x).toLocaleLowerCase('pt-BR')));
+add('Inverter texto',area()+btn('Inverter'),(x,o)=>text(o,Array.from(value(x)).reverse().join('')));
+add('Remover espaços extras',area()+btn('Limpar'),(x,o)=>text(o,value(x).trim().replace(/\s+/gu,' ')));
+add('Contador de linhas',area()+btn('Contar'),(x,o)=>text(o,value(x)===''?0:value(x).split(/\r\n|\r|\n/).length));
+add('Ordenar linhas',area()+btn('Ordenar A–Z'),(x,o)=>text(o,value(x).split(/\r?\n/).sort((a,b)=>a.localeCompare(b,'pt-BR')).join('\n')));
+add('Remover linhas duplicadas',area()+btn('Remover duplicadas'),(x,o)=>text(o,[...new Set(value(x).split(/\r?\n/))].join('\n')));
+add('Gerador de senhas',inp('Quantidade de caracteres (4–64)','number')+btn('Gerar senha'),(x,o)=>{let n=+value(x),chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';if(!Number.isInteger(n)||n<4||n>64)return text(o,'Escolha entre 4 e 64');if(!crypto?.getRandomValues)return text(o,'Navegador sem geração segura');let a=new Uint32Array(1),limit=Math.floor(4294967296/chars.length)*chars.length,s='';for(let i=0;i<n;i++){do{crypto.getRandomValues(a)}while(a[0]>=limit);s+=chars[a[0]%chars.length]}text(o,s)});
+add('Gerador de número aleatório',inp('Mínimo','number')+inp('Máximo','number')+btn('Sortear'),(x,o)=>{if(!valid(x))return text(o,'Preencha os limites');let [a,b]=nums(x);if(!Number.isSafeInteger(a)||!Number.isSafeInteger(b)||b<a||b-a>4294967295)return text(o,'Use inteiros válidos com intervalo até 4 bilhões');let range=b-a+1;if(range>4294967296)return text(o,'Intervalo muito grande');let z=new Uint32Array(1),lim=Math.floor(4294967296/range)*range;do{crypto.getRandomValues(z)}while(z[0]>=lim);text(o,a+z[0]%range)});
+add('Cronômetro simples',btn('Iniciar','s')+btn('Parar','p')+btn('Zerar','z'),(()=>{let start=0,elapsed=0,timer;return (x,o,a)=>{if(a==='s'&&!timer){start=Date.now();timer=setInterval(()=>text(o,((elapsed+Date.now()-start)/1000).toFixed(1)+' s'),100)}if(a==='p'&&timer){elapsed+=Date.now()-start;clearInterval(timer);timer=null}if(a==='z'){clearInterval(timer);timer=null;elapsed=0;text(o,'0.0 s')}}})());
+add('Data de hoje',btn('Mostrar data'),(x,o)=>text(o,new Date().toLocaleString('pt-BR')));
+add('Dias entre datas','<input type="date" aria-label="Data inicial"><input type="date" aria-label="Data final">'+btn('Calcular'),(x,o)=>{let [a,b]=[...x].map(e=>e.value);text(o,a&&b?Math.round(Math.abs((Date.parse(b+'T12:00:00Z')-Date.parse(a+'T12:00:00Z'))/86400000))+' dias':'Selecione as duas datas')});
+add('Idade aproximada em anos','<input type="date" aria-label="Nascimento">'+btn('Calcular'),(x,o)=>{let s=value(x);if(!s)return text(o,'Selecione o nascimento');let [y,m,d]=s.split('-').map(Number),now=new Date(),age=now.getFullYear()-y-(now.getMonth()+1<m||now.getMonth()+1===m&&now.getDate()<d?1:0);text(o,age<0?'Data futura':age+' anos')});
+add('Codificar URL',area()+btn('Codificar','e')+btn('Decodificar','d'),(x,o,a)=>text(o,a==='e'?encodeURIComponent(value(x)):decodeURIComponent(value(x))));
+add('Contador de vogais',area()+btn('Contar'),(x,o)=>text(o,(value(x).match(/[aeiouáàâãéêíóôõúü]/giu)||[]).length+' vogais'));
+add('Imagem para PNG','<input type="file" accept="image/*" aria-label="Escolher imagem">'+btn('Converter e baixar'),(x,o)=>{let f=x[0].files?.[0];if(!f)return text(o,'Escolha uma imagem');let url=URL.createObjectURL(f),img=new Image();img.onload=()=>{let c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);c.toBlob(blob=>{if(!blob)return text(o,'Falha na conversão');let u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='imagem.png';a.click();setTimeout(()=>URL.revokeObjectURL(u),10000);text(o,'PNG gerado!')},'image/png');URL.revokeObjectURL(url)};img.onerror=()=>{text(o,'Imagem inválida');URL.revokeObjectURL(url)};img.src=url});
+document.querySelector('#busca').addEventListener('input',e=>render(e.target.value));render();</script></body></html>
